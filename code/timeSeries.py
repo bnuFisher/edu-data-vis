@@ -8,7 +8,9 @@ from bokeh.models.widgets import Select
 from bokeh.plotting import figure
 import csv
 
-COLORS = ['#FF4500','#6666FF','#3CB371','#FFA500','#FF1493','#800080','#808080','#000000'] #limts = 8 sub-categories
+#limts = 8 sub-categories
+COLORS = ['#FF4500','#6666FF','#3CB371','#FFA500','#FF1493','#800080','#808080','#000000']
+
 
 #set up widgets
 DATA_DIR = join(dirname(__file__), 'labels2')
@@ -50,13 +52,15 @@ dic_tag = {full:short for full,short in zip(full_name,short_name)}
 
 DATA_1 = Select(value=str(data_list[3]),title=str(data_list[0]),options=data_list[3:])
 DATA_2 = Select(value=str(data_list[2]),title=str(data_list[1]),options=data_list[2:]) # 
-Uni_Name = Select(value=str(universities_list[1]),title=str(universities_list[0]),options=universities_list[1:])
+
+Uni_Name = Select(value=str(universities_list[1]),
+				  title=str(universities_list[0]),
+				  options=universities_list[1:])
 
 
 def SetMinMax(df,column):
 	minVal = min(df[column])
 	maxVal = max(df[column])
-
 	if maxVal > 0:
 		maxVal = maxVal * 1.1
 	else:
@@ -67,11 +71,9 @@ def SetMinMax(df,column):
 		minVal = minVal *1.1
 	if minVal == maxVal:
 		minVal,maxVal = 0,1
-
 	return minVal,maxVal
 
 tools = 'pan,wheel_zoom,reset,resize,save'
-
 
 def create_figure():
 
@@ -82,14 +84,16 @@ def create_figure():
 	data2 = DATA_2.value
 
 	if data2 != str(data_list[2]) and data1 != data2:
-		df = pd.read_csv(join(DATA_csv,'%s.csv'%uni_name),encoding='gbk',engine='python',usecols=['year',data1,data2]).dropna(axis=0,how='any') 
-		# df = df[1:]  # drop year == 2012 
+		df = pd.read_csv(join(DATA_csv,'%s.csv'%uni_name),encoding='gbk',
+						 engine='python',usecols=['year',data1,data2]).dropna(axis=0,how='any')
+
 		min1,max1 = SetMinMax(df,data1)
 		min2,max2 = SetMinMax(df,data2)
 		title  =  uni_name+' - '+ data1 +'  vs  ' + data2 +' - '+title_tag1
+
 	else:
-		df = pd.read_csv(join(DATA_csv,'%s.csv'%uni_name),encoding='gbk',engine='python',usecols=['year',data1]).dropna(axis=0,how='any')
-		# df = df[1:]
+		df = pd.read_csv(join(DATA_csv,'%s.csv'%uni_name),encoding='gbk',engine='python',
+						 usecols=['year',data1]).dropna(axis=0,how='any')
 		min1,max1 = SetMinMax(df,data1)
 		min2,max2 = None,None
 		title = uni_name+' - '+ data1 +' - '+title_tag1
@@ -108,12 +112,15 @@ def create_figure():
 	p1 = plot.line(x_axis,y_axis, line_width=4,line_dash='solid',line_alpha=0.8)
 	p2 = plot.circle(x_axis,y_axis,line_width=3,color='#386CB0')
 
-	label1 = LabelSet(x='year', y=data1, text='text1', x_offset=-1, y_offset=6, source=dataSource,text_font_size="0.1pt", text_align='right',text_color='#3288bd')
+	label1 = LabelSet(x='year', y=data1, text='text1', x_offset=-1, y_offset=6,
+					  source=dataSource,text_font_size="0.1pt",
+					  text_align='right',text_color='#3288bd')
+
 	plot.add_layout(label1)
 	plot = make_up(plot,df,data1,data2,min1,min2,max1,max2,p1,p2)
 
-
 	return plot
+
 
 def make_up(plot,df,data1,data2,Min1,Min2,Max1,Max2,p1,p2):
 	
@@ -136,32 +143,43 @@ def make_up(plot,df,data1,data2,Min1,Min2,Max1,Max2,p1,p2):
 		else:
 			start,end = Min2,Max2
 		plot.extra_y_ranges = {"right_axis": Range1d(start=start, end=end)}  
-		p3 = plot.line(list(range(1,len(df)+1)), list(df[data2]), line_width=4, alpha=0.8,y_range_name="right_axis",color="#FB8072",line_dash='solid')
-		p4 = plot.circle(list(range(1,len(df)+1)), list(df[data2]), line_width=3,y_range_name="right_axis",color="#FB8072")
-		plot.add_layout(LinearAxis(y_range_name="right_axis", axis_label=data2+dic_unit[data2]), 'right') #ok!
+		p3 = plot.line(list(range(1,len(df)+1)), list(df[data2]), line_width=4,alpha=0.8,
+					   y_range_name="right_axis",color="#FB8072",line_dash='solid')
+
+		p4 = plot.circle(list(range(1,len(df)+1)), list(df[data2]),
+						 line_width=3,y_range_name="right_axis",color="#FB8072")
+
+		plot.add_layout(LinearAxis(y_range_name="right_axis", axis_label=data2+dic_unit[data2]), 'right')
 		
 		df['text2'] = ['{:.2f}'.format(i)  if float(i) > 1 else '{:.3f}'.format(i)  for i in  list(df[data2])]
+
 		dataSource = ColumnDataSource(df)
-		label2 = LabelSet(x='year', y=data2, text='text2', x_offset=-3, y_offset=2, source=dataSource,text_font_size="0.05pt", text_align='right',text_color='#FB8072',y_range_name='right_axis')
+
+		label2 = LabelSet(x='year', y=data2, text='text2', x_offset=-3, y_offset=2,
+						  source=dataSource,text_font_size="0.05pt", text_align='right',
+						  text_color='#FB8072',y_range_name='right_axis')
+
 		plot.add_layout(label2)
+
 		legend = Legend(items=[
 				(data1,[p1,p2]),
 				(data2,[p3,p4])
 				],location=(0, -30))
+
 		plot.add_layout(legend,'right')
 		plot.legend.click_policy="hide"
 		plot.legend.label_text_font_size = '10pt'
 
 		return plot
 	
-	legend = Legend(items=[
-					(data1,[p1,p2]),
-					],location=(0, -30))
+	legend = Legend(items=[(data1,[p1,p2]),],location=(0, -30))
+
 	plot.add_layout(legend,'right')
 	plot.legend.click_policy="hide"
 	plot.legend.label_text_font_size = '10pt'
 
 	return plot
+
 
 def create_figure2():
 	
@@ -175,14 +193,17 @@ def create_figure2():
                  x_units='screen', y_units='screen',
                  border_line_color='white', border_line_alpha=0.1,
                  background_fill_color='white', background_fill_alpha=1.0)
+
 		info2 = Label(x=100, y=100,
                  text=text[1],text_font_size='9pt',
                  x_units='screen', y_units='screen',
                  border_line_color='white', border_line_alpha=0.1,
                  background_fill_color='white', background_fill_alpha=1.0)
+
 		plot.add_layout(info1)
 		plot.add_layout(info2)
 		plot.toolbar.logo=None
+
 		return plot
 
 	DATA_csv = join(dirname(__file__), r'time')
@@ -195,7 +216,8 @@ def create_figure2():
 	lis_second_tag = dic_second_tag[DATA_1.value].split(',')
 	lis_second_tag = [i.strip() for i in lis_second_tag]
 	
-	df_second = pd.read_csv(join(DATA_csv,'%s.csv'%uni_name),encoding='gbk',engine='python',usecols=['year']+lis_second).dropna(axis=0,how='any')
+	df_second = pd.read_csv(join(DATA_csv,'%s.csv'%uni_name),encoding='gbk', #文件名不含中文的话用默认的engine即可
+							engine='python',usecols=['year']+lis_second).dropna(axis=0,how='any')
 
 	for i,j in zip(lis_second,lis_second_tag):
 		df_second[j] = df_second[i]
@@ -218,7 +240,8 @@ def create_figure2():
 	
 	x_axis = df_second['Year'].tolist()
 
-	plot = figure(plot_width=1000,plot_height=250,x_range=x_axis,title=title,tools=tools,toolbar_location="above")
+	plot = figure(plot_width=1000,plot_height=250,x_range=x_axis,
+				  title=title,tools=tools,toolbar_location="above")
 	
 	def add_hover():
 			datatext = ['@datatext%s'%i for i in range(1,len(hover_text_lis)+1)]
@@ -228,7 +251,8 @@ def create_figure2():
 	def make_plot():
 		for index,column,color in zip(range(len(lis_second)),hover_text_lis,COLORS):
 			source = ColumnDataSource(df_second)
-			yield plot.line("Year",column, line_width=4,line_dash='solid',color=color,line_alpha=0.8,source=source)		
+			yield plot.line("Year",column, line_width=4,line_dash='solid',
+							color=color,line_alpha=0.8,source=source)
 
 	add_hover()
 
@@ -249,8 +273,6 @@ def create_figure2():
 	plot.toolbar.logo=None
 	
 	return plot
-
-
 
 
 def update(attr,old,new):
@@ -274,4 +296,4 @@ control3 = widgetbox(children=lis3,width=180,sizing_mode='scale_width')
 layout = column(row(control1,control2,control3),create_figure(),create_figure2())
 
 curdoc().add_root(layout)
-curdoc().title='dataTimeSeries'
+curdoc().title='TimeSeries'

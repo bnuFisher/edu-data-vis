@@ -1,4 +1,6 @@
-## bokeh serve apps  -- 高校财务数据可视分析
+# bokeh serve apps  -- 高校财务数据可视分析
+
+### 文档说明：
 
 1. 这是我在某单位实习时，为部门同事做的高校财务数据可视分析应用，由校际比较、时间序列、经费占比分析三个部分构成。由于实际使用的数据不能公开，我随机生成了一些数据，数据指标也仅以“数据1”等指代；但这并不影响对代码及可视效果的理解。三个可视子系统的实现代码 —— crossSection.py, timeSeries.py, ratioAnalysis.py ——在code文件夹中。
 
@@ -14,16 +16,20 @@
 4. 除了bokeh包外，你还需要对pandas包较为熟悉，后者真乃神器，很多数据清洗和转换的需求用pandas都可以轻松实现。这两个包都有非常详细的官方文档，可参阅： pandas的  [tutorial](http://pandas.pydata.org/pandas-docs/stable/tutorials.html) 以及bokeh的  [reference](http://bokeh.pydata.org/en/latest/docs/reference.html) 。
 
 
-5.   分享一下学习心得，如何尽快熟悉bokeh？
 
-	我把官方给出每个[server app example](http://bokeh.pydata.org/en/latest/docs/gallery.html#gallery) 的代码都手抄了一遍，再逐行把代码过了几遍，理解其中的逻辑。在学习这些例子的过程，我的bokeh server app应该怎么布局，需要哪些部件，就渐渐浮现了。
-     
-	当然，学习官方样例只是一个起点。事实上，你想要的效果很可能在examples中找不到，这时可以查阅官方说明，有些效果还可能需要自己写js来实现。
+<br />
+
+#### 分享一下学习心得，如何尽快熟悉bokeh？
+
+我把官方给出每个[server app example](http://bokeh.pydata.org/en/latest/docs/gallery.html#gallery) 的代码都手抄了一遍，再逐行把代码过了几遍，理解其中的逻辑。在学习这些例子的过程，我的bokeh server app应该怎么布局，需要哪些部件，就渐渐浮现了。
+
+当然，学习官方样例只是一个起点。事实上，你想要的效果很可能在examples中找不到，这时可以查阅官方说明，有些效果还可能需要自己写js来实现。
 
 
 <br />
+
 #### Bonus
 
-最后，推荐一下udemy上的这门课：[Interactive Data Visualization with Python & Bokeh](https://www.udemy.com/python-bokeh/) 。其中关于在flask框架中嵌入bokeh server app的介绍对我还挺有帮助。
+最后，推荐一下udemy上的这门课：[Interactive Data Visualization with Python & Bokeh](https://www.udemy.com/python-bokeh/) 。其中关于在flask框架中嵌入bokeh server app的介绍对我很有帮助。
 
  我购买的时候是10美元，价格还是比较平民化的。老师在讨论区挺积极，基本上都会回答学习者的提问，而你的一些疑问可能已经有人问过了，不妨先搜一下。

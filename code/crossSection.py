@@ -24,7 +24,7 @@ def returnList(file_dir):
 
 characters = returnList(file_dir='stats.txt')
 
-yearTag, regionTag, categoryTag,typeTag =characters[1],characters[2],characters[3],characters[4]
+yearTag, regionTag, categoryTag,typeTag = characters[1],characters[2],characters[3],characters[4]
 dataTag1,countTag1,meanTag1,stdTag1 = characters[5],characters[6],characters[7],characters[8]
 dataTag2,countTag2,meanTag2,stdTag2 = characters[9],characters[10],characters[11],characters[12]
 
@@ -76,10 +76,14 @@ def hoverFunc(data1,data2):
 def barPlot_xaxis_university(df_sorted,data1,data2,min1,min2,max1,max2):
 
 	if DATA_2.value == data_list[2]:
-		plot_title = YEAR.value + uni_num_list[1] + ' - ' +  DATA_1.value + ' - ' +  uni_num_list[2] + '(' + SORT_CRITERION.value + ')'  + ' - ' + uni_num_list[3] + ':' + str(UNI_NUM.value)
+		plot_title = YEAR.value + uni_num_list[1] + ' - ' +  DATA_1.value + ' - ' +  uni_num_list[2] + \
+			     '(' + SORT_CRITERION.value + ')'  + ' - ' + uni_num_list[3] + ':' + str(UNI_NUM.value)
 		df_sorted['dataText1'] =  [str(i) for i in df_sorted[data1]] 
 	else:
-		plot_title = YEAR.value + uni_num_list[1] + ' - ' +  DATA_1.value + ' vs ' +  DATA_2.value + ' - ' + uni_num_list[2] +  '(' + SORT_CRITERION.value + ')' +  ' - ' + uni_num_list[3] + ':' + str(UNI_NUM.value)
+		plot_title = YEAR.value + uni_num_list[1] + ' - ' +  DATA_1.value + ' vs ' +  DATA_2.value + ' - ' \
+			     + uni_num_list[2] +  '(' + SORT_CRITERION.value + ')' +  ' - '\
+			     + uni_num_list[3] + ':' + str(UNI_NUM.value)
+
 		df_sorted['dataText1'] =  [str(i) for i in df_sorted[data1]] 
 		df_sorted['dataText2'] =  [str(i) for i in df_sorted[data2]] 
 
@@ -89,7 +93,11 @@ def barPlot_xaxis_university(df_sorted,data1,data2,min1,min2,max1,max2):
 
 	elif len(df_sorted) <  10: #adjust the width of the window
 		source = ColumnDataSource(df_sorted.to_dict(orient='list'))
-		plot = figure(plot_width=750, plot_height=400,x_range=FactorRange(factors=source.data['university']),tools=[tools],title=plot_title)
+
+		plot = figure(plot_width=750, plot_height=400,
+					  x_range=FactorRange(factors=source.data['university']),
+					  tools=[tools],title=plot_title)
+
 		plot.vbar(x="university",width=0.3,top=data1,source=source)
 		plot.xaxis.major_label_orientation = np.pi/4
 		plot.yaxis.axis_label = data1+dic_unit[data1]
@@ -102,14 +110,21 @@ def barPlot_xaxis_university(df_sorted,data1,data2,min1,min2,max1,max2):
 
 		source = ColumnDataSource(df_sorted.to_dict(orient='list'))
 		
-		plot = figure(plot_width=width, plot_height=400,x_range=FactorRange(factors=source.data['university']),tools=[tools],title=plot_title,)
+		plot = figure(plot_width=width, plot_height=400,
+					  x_range=FactorRange(factors=source.data['university']),
+					  tools=[tools],title=plot_title,)
+
 		plot.vbar(x="university",width=0.3,top=data1,source=source)
 		plot.xaxis.major_label_orientation = np.pi/4
 		plot.yaxis.axis_label = data1+dic_unit[data1]
 	else:
 		width= 2880 if LABEL_OPTION.value == str(dataLabel_list[2]) else 1280
 		source = ColumnDataSource(df_sorted.to_dict(orient='list'))
-		plot = figure(plot_width=width, plot_height=400,x_range=FactorRange(factors=source.data['university']),tools=[tools],title=plot_title)
+
+		plot = figure(plot_width=width, plot_height=400,
+					  x_range=FactorRange(factors=source.data['university']),
+					  tools=[tools],title=plot_title)
+
 		plot.vbar(x="university",width=0.3,top=data1,source=source)
 		plot.xaxis.major_label_orientation = pd.np.pi / 3
 		plot.yaxis.axis_label = data1+dic_unit[data1]
@@ -144,25 +159,38 @@ def make_up(plot,df_sorted,data1,data2,Min1,Min2,Max1,Max2):
 		else:
 			start,end = Min2,Max2
 		plot.extra_y_ranges = {"right_axis": Range1d(start=start, end=end)}  
-		plot.line(list(range(1,len(df_sorted)+1)), list(df_sorted[data2]), line_width=3, alpha=0.8,y_range_name="right_axis",color="red",line_dash='dashed',legend=data2)
-		plot.circle(list(range(1,len(df_sorted)+1)), list(df_sorted[data2]), line_width=2, alpha=0.6,y_range_name="right_axis",color="red",legend=data2)
+
+		plot.line(list(range(1,len(df_sorted)+1)), list(df_sorted[data2]), line_width=3, alpha=0.8,
+				  y_range_name="right_axis",color="red",line_dash='dashed',legend=data2)
+
+		plot.circle(list(range(1,len(df_sorted)+1)), list(df_sorted[data2]), line_width=2, alpha=0.6,
+					y_range_name="right_axis",color="red",legend=data2)
+
 		plot.add_layout(LinearAxis(y_range_name="right_axis", axis_label=data2+dic_unit[data2]), 'right') #ok!
 		plot.legend.click_policy="hide"
 
 	# add value label
 	if LABEL_OPTION.value == str(dataLabel_list[2]):
 		df_copy = df_sorted.copy() #key point! 
-		df_sorted['text'] = ['{:.1f}'.format(i)  if float(i) > 1 else '{:.3f}'.format(i)  for i in  list(df_sorted[data1])]
+		df_sorted['text'] = ['{:.1f}'.format(i)  if float(i) > 1 else '{:.3f}'.format(i)
+							  for i in  list(df_sorted[data1])]
 
 		dataSource = ColumnDataSource(df_sorted)
-		labels = LabelSet(x='university', y=data1, text='text', x_offset=0, y_offset=7, source=dataSource,text_font_size="0.5pt", text_align='center',text_color='#3288bd')
+		labels = LabelSet(x='university', y=data1, text='text', x_offset=0, y_offset=7,
+						  source=dataSource,text_font_size="0.5pt",
+						  text_align='center',text_color='#3288bd')
+
 		plot.add_layout(labels)
 
 		if data2 != str(data_list[2]) and data1 != data2:
-			df_copy['text2'] = ['{:.1f}'.format(i) if float(i) > 1 else '{:.3f}'.format(i)  for i in  list(df_copy[data2])]
+			df_copy['text2'] = ['{:.1f}'.format(i) if float(i) > 1 else '{:.3f}'.format(i)
+								for i in  list(df_copy[data2])]
 
 			dataSource = ColumnDataSource(df_copy)
-			labels = LabelSet(x='university', y=data2, text='text2', x_offset=0, y_offset=1, source=dataSource,text_font_size="0.5pt", text_align='center',text_color='black',y_range_name='right_axis')
+			labels = LabelSet(x='university', y=data2, text='text2', x_offset=0, y_offset=1,
+							  source=dataSource,text_font_size="0.5pt", text_align='center',
+							  text_color='black',y_range_name='right_axis')
+
 			plot.add_layout(labels)
 			
 	return plot
@@ -171,12 +199,22 @@ def make_up(plot,df_sorted,data1,data2,Min1,Min2,Max1,Max2):
 #stats
 def Statistics(stats_list1,stats_list2):
 
-	text_info1 = '{dataTag}{dataVal}\n\n{countTag}{countVal}\n\n{meanTag}{meanVal:.3f}\n\n{stdTag}{stdVal:.3f}'.format(dataTag=dataTag1,dataVal=DATA_1.value,countTag=countTag1,countVal=int(float(stats_list1[2])),meanTag=meanTag1,meanVal=float(stats_list1[4]),stdTag=stdTag1,stdVal=float(stats_list1[6]))
+	text_info1 = '{dataTag}{dataVal}\n\n{countTag}' \
+				 '{countVal}\n\n{meanTag}{meanVal:.3f}\n\n{stdTag}{stdVal:.3f}'.format(
+		dataTag=dataTag1,dataVal=DATA_1.value,countTag=countTag1,countVal=int(float(stats_list1[2])),
+		meanTag=meanTag1,meanVal=float(stats_list1[4]),stdTag=stdTag1,stdVal=float(stats_list1[6]))
 
-	text_info2 = '{dataTag}{dataVal}\n\n{countTag}{countVal}\n\n{meanTag}{meanVal}\n\n{stdTag}{stdVal}'.format(dataTag=dataTag2,dataVal=str(data_list[2]),countTag=countTag2,countVal=None,meanTag=meanTag2,meanVal=None,stdTag=stdTag2,stdVal=None)
+	text_info2 = '{dataTag}{dataVal}\n\n{countTag}{countVal}\n\n{meanTag}' \
+		     '{meanVal}\n\n{stdTag}{stdVal}'.format(
+		      dataTag=dataTag2,dataVal=str(data_list[2]),countTag=countTag2,countVal=None,
+		      meanTag=meanTag2,meanVal=None,stdTag=stdTag2,stdVal=None)
 
 	if stats_list2 != None:
-		text_info2 = '{dataTag}{dataVal}\n\n{countTag}{countVal}\n\n{meanTag}{meanVal:.3f}\n\n{stdTag}{stdVal:.3f}'.format(dataTag=dataTag2,dataVal=DATA_2.value,countTag=countTag2,countVal=int(float(stats_list2[2])),meanTag=meanTag2,meanVal=float(stats_list2[4]),stdTag=stdTag2,stdVal=float(stats_list2[6]))
+		text_info2 = '{dataTag}{dataVal}\n\n{countTag}{countVal}\n\n{meanTag}' \
+			     '{meanVal:.3f}\n\n{stdTag}{stdVal:.3f}'.format(
+			      dataTag=dataTag2,dataVal=DATA_2.value,countTag=countTag2,
+			      countVal=int(float(stats_list2[2])),meanTag=meanTag2,meanVal=float(stats_list2[4]),
+			      stdTag=stdTag2,stdVal=float(stats_list2[6]))
 		
 		return text_info1,text_info2
 
@@ -193,7 +231,8 @@ def create_figure():
 	DATA_Dir = join(dirname(__file__), 'data')
 
 	if _data_2 != str(data_list[2]) and _data_1 != _data_2:
-		df_copy =  pd.read_csv(join(DATA_Dir,'%stotal.csv'%_year),encoding='gbk',usecols=['university',_data_1,_data_2])
+		df_copy =  pd.read_csv(join(DATA_Dir,'%stotal.csv'%_year),encoding='gbk',
+							        usecols=['university',_data_1,_data_2])
 		df_copy = df_copy.drop(df_copy.index[-1])
 		min1,max1 = SetMinMax(df_copy,_data_1)
 		min2,max2 = SetMinMax(df_copy,_data_2)
@@ -201,14 +240,13 @@ def create_figure():
 		ascending = False if SORT_CRITERION.value == sortCriterion_list[1] else True
 		df_sorted = df_copy.sort_values(by=sort_by, axis=0, ascending=ascending)
 		df_sorted = df_sorted[:UNI_NUM.value]
-
 	else:
-		df_copy = pd.read_csv(join(DATA_Dir,'%stotal.csv'%_year),encoding='gbk',usecols=['university',_data_1])
+		df_copy = pd.read_csv(join(DATA_Dir,'%stotal.csv'%_year),encoding='gbk',
+							       usecols=['university',_data_1])
 		df_copy = df_copy.drop(df_copy.index[-1])
 		min1,max1 = SetMinMax(df_copy,_data_1)
 		min2,max2 = None,None
 		ascending = False if SORT_CRITERION.value == sortCriterion_list[1] else True
-
 		df_sorted = df_copy.sort_values(by=_data_1, axis=0, ascending=ascending)
 		df_sorted = df_sorted[:UNI_NUM.value]
 
@@ -216,7 +254,7 @@ def create_figure():
 	stats1.text = str(df_sorted[[_data_1]].describe())
 	stats_list1 = list(stats1.text.split())
 
-	stats_list2= None
+	stats_list2 = None
 	stats1.text, stats2.text = Statistics(stats_list1,stats_list2)
 
 	if DATA_2.value != str(data_list[2]):
@@ -232,7 +270,6 @@ def create_figure():
 def SetMinMax(df,column):
 	minVal = min(df[column])
 	maxVal = max(df[column])
-
 	if maxVal > 0:
 		maxVal = maxVal * 1.1
 	else:
@@ -254,7 +291,6 @@ selects = [YEAR,DATA_1,DATA_2,LABEL_OPTION,SORT_LABEL,SORT_CRITERION,UNI_NUM]
 for select in selects:
 	select.on_change('value',update) 
 
-
 #set up layout
 lis1 = [YEAR]
 lis5 = [DATA_1]
@@ -275,20 +311,11 @@ control10 = widgetbox(children=lis10,width=310,sizing_mode='scale_width')
 
 
 layout = column(row(column(row(row(control1,control7)),
-					row(row(control8,control9)),
-					row(row(control10))),
-					column(control5,stats1),
-					column(control6,stats2),
-					),
-					create_figure())
-
-
-
-
-
-
-
+		        row(row(control8,control9)),
+	            row(row(control10))),
+		        column(control5,stats1),
+		        column(control6,stats2)),
+		        create_figure())
 
 curdoc().add_root(layout)
 curdoc().title='dataINDEX'
-
