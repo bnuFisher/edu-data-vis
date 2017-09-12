@@ -166,7 +166,8 @@ def create_figure_individul():
 	values = [i[1] for i in sorted_tuple]
 	values_percent = [i/sum(values) for i in values]
 	valPercent_for_text = [("{:1}".format(val)+" ({:.2%})".format(per)) for val,per in
-						  zip(values,values_percent)]
+							zip(values,values_percent)]
+
 	stats0.text,stats1.text = statistics_inner(data_value_for_text,df_col_for_text,valPercent_for_text)
 	count = [i if i<0.01 else 0 for i in values_percent]
 	tag_count = '{:.2%}'.format(sum(count))
@@ -182,13 +183,12 @@ def create_figure_individul():
 		    university + ' - ' + DATA.value + ' - ' + plot_title_part1
 
 	pie_chart = Donut(data_pie,width=width,height=width,tools=tools,toolbar_location="right",
-					text_font_size='0.01pt',title=title,hover_tool=False)
+			  		  text_font_size='0.01pt',title=title,hover_tool=False)
 
 	pie_chart.toolbar.logo=None
 	pie_chart.outline_line_alpha = 0
 
 	return pie_chart
-
 
 
 def create_figure_interSchool():
@@ -223,7 +223,7 @@ def create_figure_interSchool():
 	percent_for_text = ['{:.2%}'.format(float(i)) for i in percent_for_plot]
 
 	tuple_for_text =sorted([(val,per,tag) for val,per,tag in
-							zip(values_for_plot,percent_for_text,tags_for_plot)],reverse=True)
+			       zip(values_for_plot,percent_for_text,tags_for_plot)],reverse=True)
 
 	sublist_university = [item[2] for item in tuple_for_text]
 	sublist_value      = [str(item[0]) + ' ' + '('+str(item[1]) + ')' for item in tuple_for_text]
@@ -248,9 +248,7 @@ def create_figure_interSchool():
 		if tags_value[index] < 0.01:
 			tags_num[index] = 100
 
-	dic_for_pie =  {'university':tags_university,
-				   'num':tags_num,
-				   'value':tags_value}
+	dic_for_pie =  {'university':tags_university,'num':tags_num,'value':tags_value}
 
 	stats0.text,stats1.text = statistics_inter(basevalue,sublist_university,sublist_value)
 	df_pie = pd.DataFrame(dic_for_pie)
@@ -258,8 +256,9 @@ def create_figure_interSchool():
 			+ DATA.value + ' - ' + plot_title_part2
 
 	pie_chart = Donut(df_pie,label=['num','university'],values='value',
-			    width=width,height=height,tools=tools,toolbar_location="right",
-				text_font_size='0.01pt',title=title,hover_tool=False)
+			  		  width=width,height=height,tools=tools,toolbar_location="right",
+			  		  text_font_size='0.01pt',title=title,hover_tool=False)
+	
 	pie_chart.toolbar.logo=None
 	pie_chart.outline_line_alpha = 0
 
@@ -270,8 +269,8 @@ def create_figure_interSchool_sorting():
 	data_value = DATA.value
 	year = YEAR.value
 
-	df = pd.read_csv(join(DATA_CSV,'%stotal.csv'%year),
-					 encoding='gbk',engine='python',usecols=['university',data_value])
+	df = pd.read_csv(join(DATA_CSV,'%stotal.csv'%year),encoding='gbk',engine='python',
+		             usecols=['university',data_value])
 
 	baseSeries = df.loc[df['university'] == baseTitle]
 	basevalue = baseSeries[data_value].iloc[0]
@@ -291,8 +290,8 @@ def create_figure_interSchool_sorting():
 	value_list      = df[DATA.value].tolist()
 	value_list.append(float('{:.1f}'.format(value_list[0] - sum(value_list[1:]))))
 	tags_university = [i for i in university_list[1:]]
-	tags_percent_digital    = [i/value_list[0] for i in value_list[1:]]
-	tags_percent    = ['{:.1%}'.format(i/value_list[0]) for i in value_list[1:]]
+	tags_percent_digital  = [i/value_list[0] for i in value_list[1:]]
+	tags_percent = ['{:.1%}'.format(i/value_list[0]) for i in value_list[1:]]
 	tags_university_for_plot = [i + ' ' + j for i,j in zip(tags_university,tags_percent)]
 	tags_university_for_text = tags_university[:]
 	tags_percent_for_text = tags_percent[:]
@@ -312,20 +311,18 @@ def create_figure_interSchool_sorting():
 		if tags_percent_digital[index] < 0.01:
 			tags_num[index] = 100
 
-	dic_for_pie =  {'university':tags_university_for_plot,
-				   'num':tags_num,
-				   'value':tags_value}
+	dic_for_pie =  {'university':tags_university_for_plot,'num':tags_num,'value':tags_value}
 
 	df_pie = pd.DataFrame(dic_for_pie)
 
 	sublist_value = [str(i)+' '+ '('+ j + ')' for i, j in zip(tags_value,tags_percent_for_text)]
-	stats0.text,stats1.text = statistics_inter_sorting(basevalue,
-													   tags_university_for_text,sublist_value)
+	stats0.text,stats1.text = statistics_inter_sorting(basevalue,tags_university_for_text,sublist_value)
+
 	title = str(YEAR.value) + plot_title_part0 + ' - '+ plot_title_part3 + ' - ' \
 			 + DATA.value + ' - ' + plot_title_part4 + plot_title_part5
 	pie_chart = Donut(df_pie,label=['num','university'],values='value',
-					  width=width,height=height,tools=tools,toolbar_location="right",
-					  text_font_size='0.01pt',title=title,hover_tool=False)
+				      width=width,height=height,tools=tools,toolbar_location="right",
+				      text_font_size='0.01pt',title=title,hover_tool=False)
 
 	pie_chart.toolbar.logo=None
 	pie_chart.outline_line_alpha = 0
@@ -366,9 +363,9 @@ control5 = widgetbox(children=lis5,width=240,height=10,sizing_mode='scale_both')
 control6 = widgetbox(children=lis6,width=240,height=10,sizing_mode='scale_both')
 
 layout1 =  row(column(control1,control4,control5,control6),
-			   column(control2,stats0),
-			   column(control3,stats1),
-			   column(create_figure(),paragraph))
+	       column(control2,stats0),
+	       column(control3,stats1),
+	       column(create_figure(),paragraph))
 
 curdoc().add_root(layout1)
 curdoc().title='ratioAnalysis'

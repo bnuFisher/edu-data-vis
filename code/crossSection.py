@@ -54,7 +54,6 @@ SORT_CRITERION = Select(value=sortCriterion_list[1],title=sortCriterion_list[0],
 UNI_NUM = Slider(title=uni_num_list[0],value=10,start=10,end=76,step=10)
 
 
-
 stats1 = PreText(text='',width=300,height=38)
 stats2 = PreText(text='',width=300,height=38)
 
@@ -291,6 +290,7 @@ selects = [YEAR,DATA_1,DATA_2,LABEL_OPTION,SORT_LABEL,SORT_CRITERION,UNI_NUM]
 for select in selects:
 	select.on_change('value',update) 
 
+
 #set up layout
 lis1 = [YEAR]
 lis5 = [DATA_1]
@@ -300,7 +300,6 @@ lis8 = [SORT_LABEL]
 lis9 = [SORT_CRITERION]
 lis10 = [UNI_NUM]
 
- 
 control1 = widgetbox(children=lis1,width=180,sizing_mode='scale_width')
 control5 = widgetbox(children=lis5,width=320,sizing_mode='scale_width')
 control6 = widgetbox(children=lis6,width=320,sizing_mode='scale_width')
@@ -309,10 +308,7 @@ control8 = widgetbox(children=lis8,width=180,sizing_mode='scale_width')
 control9 = widgetbox(children=lis9,width=180,sizing_mode='scale_width')
 control10 = widgetbox(children=lis10,width=310,sizing_mode='scale_width')
 
-
-layout = column(row(column(row(row(control1,control7)),
-		        row(row(control8,control9)),
-	            row(row(control10))),
+layout = column(row(column(row(row(control1,control7)),row(row(control8,control9)),row(row(control10))),
 		        column(control5,stats1),
 		        column(control6,stats2)),
 		        create_figure())

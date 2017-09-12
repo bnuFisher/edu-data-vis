@@ -40,8 +40,6 @@ dic_second = {first:second for first,second in zip(yLabel,secondClass) if second
 dic_second_tag = {first:second for first,second in zip(yLabel,secondTag) if second!= ''}
 
 
-
-
 LIS1 = [i.split(',') for i in secondClass if i != '']
 full_name = [i for item in LIS1 for i in item]
 
@@ -72,6 +70,7 @@ def SetMinMax(df,column):
 	if minVal == maxVal:
 		minVal,maxVal = 0,1
 	return minVal,maxVal
+
 
 tools = 'pan,wheel_zoom,reset,resize,save'
 
@@ -188,17 +187,13 @@ def create_figure2():
 		text = open(join(DATA_DIR,'info_text.txt'),encoding='utf-8').readlines()
 
 		plot = figure(width=1000,height=200,tools='',toolbar_location='left')
-		info1 = Label(x=100, y=130,
-                 text=text[0],text_font_size='11pt',
-                 x_units='screen', y_units='screen',
-                 border_line_color='white', border_line_alpha=0.1,
-                 background_fill_color='white', background_fill_alpha=1.0)
+		info1 = Label(x=100, y=130,text=text[0],text_font_size='11pt',x_units='screen', y_units='screen',
+                 	      border_line_color='white', border_line_alpha=0.1,
+                 	      background_fill_color='white', background_fill_alpha=1.0)
 
-		info2 = Label(x=100, y=100,
-                 text=text[1],text_font_size='9pt',
-                 x_units='screen', y_units='screen',
-                 border_line_color='white', border_line_alpha=0.1,
-                 background_fill_color='white', background_fill_alpha=1.0)
+		info2 = Label(x=100, y=100,text=text[1],text_font_size='9pt',x_units='screen', y_units='screen',
+                 	      border_line_color='white', border_line_alpha=0.1,
+                 	      background_fill_color='white', background_fill_alpha=1.0)
 
 		plot.add_layout(info1)
 		plot.add_layout(info2)
@@ -217,7 +212,7 @@ def create_figure2():
 	lis_second_tag = [i.strip() for i in lis_second_tag]
 	
 	df_second = pd.read_csv(join(DATA_csv,'%s.csv'%uni_name),encoding='gbk', #文件名不含中文的话用默认的engine即可
-							engine='python',usecols=['year']+lis_second).dropna(axis=0,how='any')
+				engine='python',usecols=['year']+lis_second).dropna(axis=0,how='any')
 
 	for i,j in zip(lis_second,lis_second_tag):
 		df_second[j] = df_second[i]
@@ -241,7 +236,7 @@ def create_figure2():
 	x_axis = df_second['Year'].tolist()
 
 	plot = figure(plot_width=1000,plot_height=250,x_range=x_axis,
-				  title=title,tools=tools,toolbar_location="above")
+		      title=title,tools=tools,toolbar_location="above")
 	
 	def add_hover():
 			datatext = ['@datatext%s'%i for i in range(1,len(hover_text_lis)+1)]
