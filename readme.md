@@ -10,7 +10,7 @@
     我看到有人将bokeh比喻为Python可视化库中的d3, 但也承认bokeh目前仍无法撼动d3在可视化领域的霸主地位。好吧，其实如果熟悉js和d3的话，你可能也不会用bokeh了吧；而如果你和我一样，仅有Python基础，又需要做一个可视化的web应用，那么bokeh就是一个很好的选择了。
 
 
-3. **实现项目需要的安装包见 requirements.txt文件。需要说明的是，目前numpy和bokeh包都有了更新的版本，且并不完全与当前的应用兼容。如果你fork后启用程序报错，请务必检查安装包的版本是否和我列出的一致。**
+3. **实现项目需要的安装包见 requirements.txt文件。需要说明的是，目前numpy和bokeh包都有了更新的版本，且并不完全与当前的应用兼容。如果你fork后启用程序报错，请务必检查安装包的版本是否和我列出的一致。** 使用命令: pip install -r requirements.txt 即可自动安装这些包，当然，请在虚拟环境(virtualenv)下进行发开。
 
 
 4. 除了bokeh包外，你还需要对pandas包较为熟悉，后者真乃神器，很多数据清洗和转换的需求用pandas都可以轻松实现。这两个包都有非常详细的官方文档，可参阅： pandas的  [tutorial](http://pandas.pydata.org/pandas-docs/stable/tutorials.html) 以及bokeh的  [reference](http://bokeh.pydata.org/en/latest/docs/reference.html) 。
