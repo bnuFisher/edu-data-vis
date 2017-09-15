@@ -4,7 +4,7 @@ import numpy as np
 from bokeh.io import curdoc
 from bokeh.layouts import row, column,widgetbox
 from bokeh.plotting import figure 
-from bokeh.models import ColumnDataSource,Legend,HoverTool,LinearAxis,Range1d,LabelSet
+from bokeh.models import ColumnDataSource,Legend,LinearAxis,Range1d,LabelSet
 from bokeh.models.widgets import PreText,Select,Slider
 from bokeh.models.ranges import FactorRange
 from bokeh.models.glyphs import VBar
@@ -58,18 +58,6 @@ stats1 = PreText(text='',width=300,height=38)
 stats2 = PreText(text='',width=300,height=38)
 
 tools = 'pan,wheel_zoom,resize,reset,save'
-
-def hoverFunc(data1,data2):
-	if data2 == data_list[2]:
-		x = HoverTool(tooltips=[
-			(uni_num_list[4],"$x"),
-			(data1,"@dataText1")])
-	else:
-		x = HoverTool(tooltips=[
-			(uni_num_list[4],"$x"),
-			(data1,"@dataText1"),
-			(data2,"@dataText2")])
-	return x
 
 
 def barPlot_xaxis_university(df_sorted,data1,data2,min1,min2,max1,max2):
@@ -145,9 +133,6 @@ def make_up(plot,df_sorted,data1,data2,Min1,Min2,Max1,Max2):
 	plot.ygrid.grid_line_alpha = 0.8
 	plot.ygrid.grid_line_dash = [6,4]
 	plot.title.text_font_size = '11pt'
-
-	hover = hoverFunc(data1,data2)
-	plot.add_tools(hover)
 
 	#add right axis
 	if data2 != str(data_list[2]) and data1 != data2:
@@ -309,9 +294,9 @@ control9 = widgetbox(children=lis9,width=180,sizing_mode='scale_width')
 control10 = widgetbox(children=lis10,width=310,sizing_mode='scale_width')
 
 layout = column(row(column(row(row(control1,control7)),row(row(control8,control9)),row(row(control10))),
-		        column(control5,stats1),
-		        column(control6,stats2)),
-		        create_figure())
+		    column(control5,stats1),
+		    column(control6,stats2)),
+		    create_figure())
 
 curdoc().add_root(layout)
 curdoc().title='dataINDEX'
