@@ -119,11 +119,12 @@ def statistics_inter(data_value,sublist_university,sublist_value):
 
 def statistics_inter_sorting(data_value,sublist_university,sublist_value):	
 	text_info0 = '\n{yearTitle}{yearVal}\n\n{sortTag}:{sortCriterion}\n\n{universityName}' \
-				 '\n\n{universityTotal}\n\n'.format(universityTotal=baseTitle,yearTitle=yearTitle,
-				  yearVal=YEAR.value,universityName=universityName,
-				  sortTag=sort_list[0],sortCriterion=Sorting.value)
+		     '\n\n{universityTotal}\n\n'.format(universityTotal=baseTitle,yearTitle=yearTitle,
+		     yearVal=YEAR.value,universityName=universityName,
+		     sortTag=sort_list[0],sortCriterion=Sorting.value)
 	sublist_university = [str(index) + '.' + university for index,university in
-						  zip(range(1,Sort_slider.value+1),sublist_university)]
+			      zip(range(1,Sort_slider.value+1),sublist_university)]
+
 	sublist_university.append(other_universities)
 	text_info0 = text_info0 + ''.join(sub_list(sublist_university))
 	text_info1 = '\n{dataUnit2}{data_tag}\n\n{Fetch_decending} {num} {weizhi}\n\n' \

@@ -11,7 +11,6 @@ import csv
 #limts = 8 sub-categories
 COLORS = ['#FF4500','#6666FF','#3CB371','#FFA500','#FF1493','#800080','#808080','#000000']
 
-
 #set up widgets
 DATA_DIR = join(dirname(__file__), 'labels2')
 
@@ -52,8 +51,8 @@ DATA_1 = Select(value=str(data_list[3]),title=str(data_list[0]),options=data_lis
 DATA_2 = Select(value=str(data_list[2]),title=str(data_list[1]),options=data_list[2:]) # 
 
 Uni_Name = Select(value=str(universities_list[1]),
-				  title=str(universities_list[0]),
-				  options=universities_list[1:])
+		  title=str(universities_list[0]),
+		  options=universities_list[1:])
 
 
 def SetMinMax(df,column):

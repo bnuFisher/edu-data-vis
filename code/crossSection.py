@@ -82,8 +82,8 @@ def barPlot_xaxis_university(df_sorted,data1,data2,min1,min2,max1,max2):
 		source = ColumnDataSource(df_sorted.to_dict(orient='list'))
 
 		plot = figure(plot_width=750, plot_height=400,
-					  x_range=FactorRange(factors=source.data['university']),
-					  tools=[tools],title=plot_title)
+			      x_range=FactorRange(factors=source.data['university']),
+			      tools=[tools],title=plot_title)
 
 		plot.vbar(x="university",width=0.3,top=data1,source=source)
 		plot.xaxis.major_label_orientation = np.pi/4
