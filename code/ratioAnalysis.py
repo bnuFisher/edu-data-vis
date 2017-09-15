@@ -344,10 +344,11 @@ def create_figure():
 def update(attr,old,new):
 	layout1.children[3].children[0] = create_figure()
 
-selects = [YEAR,DATA,MULTI_SELECT,SWITCH,Sorting,Sort_slider]
 
+selects = [YEAR,DATA,MULTI_SELECT,SWITCH,Sorting,Sort_slider]
 for select in selects:
 	select.on_change('value',update) 
+
 
 lis2 = [YEAR]
 lis3 = [DATA]
