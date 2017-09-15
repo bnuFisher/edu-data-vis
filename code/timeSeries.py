@@ -211,7 +211,7 @@ def create_figure2():
 	lis_second_tag = dic_second_tag[DATA_1.value].split(',')
 	lis_second_tag = [i.strip() for i in lis_second_tag]
 	
-	df_second = pd.read_csv(join(DATA_csv,'%s.csv'%uni_name),encoding='gbk', #文件名不含中文的话用默认的engine即可
+	df_second = pd.read_csv(join(DATA_csv,'%s.csv'%uni_name),encoding='gbk', 
 				engine='python',usecols=['year']+lis_second).dropna(axis=0,how='any')
 
 	for i,j in zip(lis_second,lis_second_tag):
