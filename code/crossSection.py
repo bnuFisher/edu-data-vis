@@ -299,4 +299,4 @@ layout = column(row(column(row(row(control1,control7)),row(row(control8,control9
 		    create_figure())
 
 curdoc().add_root(layout)
-curdoc().title='dataINDEX'
+curdoc().title='crossSection'
